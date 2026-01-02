@@ -81,7 +81,7 @@ pub enum NiriError {
 type NiriResult<T> = Result<T, NiriError>;
 
 /// Window data for session persistence (excludes title field)
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize)]
 struct SessionWindow<'niri> {
    id:               u64,
    /// The application id of the window, see <https://wayland-book.com/xdg-shell-basics/xdg-toplevel.html>
@@ -103,7 +103,7 @@ struct SessionWindow<'niri> {
    window_size:      Option<(i32, i32)>,
 }
 
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Default, Deserialize)]
 #[serde(deny_unknown_fields)]
 struct Config {
    #[serde(default)]
@@ -114,14 +114,14 @@ struct Config {
    launch: HashMap<String, String>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, Default)]
+#[derive(Deserialize, Default)]
 #[serde(deny_unknown_fields)]
 struct Skip {
    #[serde(default)]
    apps: Vec<String>,
 }
 
-#[derive(Parser, Debug, Clone)]
+#[derive(Parser)]
 #[command(
     author=crate_authors!("\n"),
     styles=get_styles(),
